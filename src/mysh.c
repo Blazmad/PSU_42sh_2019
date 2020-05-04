@@ -32,7 +32,7 @@ int mysh(stru_t stru)
 {
     while (1) {
         my_signal();
-        my_printf("\033[33mcmadzar$>\033[36m[%s] \033[33m~ \033[0m", stru.pwd);
+        my_printf("\033[33m42sh$>\033[36m[%s] \033[33m~ \033[0m", stru.pwd);
         stru = get_line(stru);
         stru = get_path(stru);
         if (stru.str_line[0] == '\n')
