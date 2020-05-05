@@ -19,9 +19,10 @@ char *get_command_into_path(stru_t stru)
     stru = strcat_to_path(stru);
     if (access(stru.line[0], F_OK) == 0)
         return (stru.line[0]);
-    for (int i = 0; stru.path[i]; i++)
+    for (int i = 0; stru.path[i]; i++) {
         if (access(stru.path[i], F_OK) == 0)
             return (stru.path[i]);
+    }
     return (NULL);
 }
 
@@ -48,8 +49,10 @@ int execute_command(stru_t stru)
     pid_t pid;
     int status = 0;
 
-    if (command == NULL)
+    if (check_access_echo(stru, status, command) == 1) {
+        redirection(stru);
         return (1);
+    }
     if ((pid = fork()) == -1) {
         perror("fork_error\n");
         exit(EXIT_FAILURE);
