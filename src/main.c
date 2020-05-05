@@ -12,7 +12,7 @@ int main(int ac, char **av, char **env)
     stru_t stru = init_stru(stru);
 
     if (ac != 1) {
-        my_putstr("Usage: ./mysh\n");
+        my_putstr("Usage: ./42sh\n");
         return (84);
     }
     stru = get_env(env, stru);

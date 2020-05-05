@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-NAME		=	mysh
+NAME		=	42sh
 
 LD		=	@ld
 CC		=	@gcc
