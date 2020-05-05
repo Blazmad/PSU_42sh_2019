@@ -55,6 +55,11 @@ stru_t get_path(stru_t stru);
 stru_t init_stru(stru_t stru);
 int mysh(stru_t stru);
 
+//-redirection.c
+int check_access_echo(stru_t stru, int res, char *command);
+void redirection(stru_t stru);
+void redirection_echo(stru_t stru);
+
 //search_element_env.c
 int count_env_lines(char **env);
 int search_env_element(stru_t stru, char *element);
