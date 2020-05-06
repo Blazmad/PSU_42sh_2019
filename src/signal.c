@@ -12,7 +12,7 @@ void ctrl_c(int sign)
     char str[100];
 
     (void)sign;
-    my_printf("\n\033[33mcmadzar$>\033[36m[%s] \033[33m~ \033[0m",
+    my_printf("\n\033[33m42sh$>\033[36m[%s] \033[33m~ \033[0m",
         getcwd(str, sizeof(str)));
 }
 

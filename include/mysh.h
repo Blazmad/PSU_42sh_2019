@@ -24,6 +24,7 @@ typedef struct stru
     char **envv;
     char pwd[100];
     char *old_pwd;
+    int nb;
 }stru_t;
 
 //-cd_bultin.c
@@ -54,6 +55,7 @@ stru_t get_path(stru_t stru);
 //-mysh.c
 stru_t init_stru(stru_t stru);
 int mysh(stru_t stru);
+int check_and_exec_command(stru_t stru);
 
 //-redirection.c
 int check_access_echo(stru_t stru, int res, char *command);
