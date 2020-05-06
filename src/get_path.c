@@ -40,7 +40,7 @@ char **make_double_array_path(char *str)
     int k = 0;
     char **array = malloc(sizeof(char *) * (count_path_lines(str) + 1));
 
-    for (; str[k] != '/'; k++);
+    for (; str[k] != '/' && str[k] != '\0'; k++);
     while (i < count_path_lines(str)) {
         array[i] = malloc(sizeof(char) * count_path_char(str, k) + 1);
         j = 0;
