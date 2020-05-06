@@ -21,10 +21,8 @@ char *get_command_into_path(stru_t stru)
     if (access(stru.line[stru.nb], F_OK) == 0)
         return (stru.line[stru.nb]);
     for (int i = 0; stru.path[i] != NULL; i++) {
-        if (access(stru.path[i], F_OK) == 0) {
-            my_printf("%s\n", stru.path[i]);
+        if (access(stru.path[i], F_OK) == 0)
             return (stru.path[i]);
-        }
     }
     return (NULL);
 }
