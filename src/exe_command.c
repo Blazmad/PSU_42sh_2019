@@ -48,13 +48,13 @@ stru_t check_execve_error(stru_t stru, char *command)
 int execute_command(stru_t stru)
 {
     char *command = get_command_into_path(stru);
-    pid_t pid;
     int status = 0;
+    pid_t pid = fork();
 
     if (check_access_echo(stru, status, command) == 1) {
         redirection(stru);
         return (1);
-    } if ((pid = fork()) == -1) {
+    } if (pid == -1) {
         perror("fork_error\n");
         exit(EXIT_FAILURE);
     } else if (pid == 0) {
