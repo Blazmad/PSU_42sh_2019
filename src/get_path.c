@@ -42,7 +42,7 @@ char **make_double_array_path(char *str)
 
     for (; str[k] != '/' && str[k] != '\0'; k++);
     while (i < count_path_lines(str)) {
-        array[i] = malloc(sizeof(char) * count_path_char(str, k) + 1);
+        array[i] = malloc(sizeof(char) * (count_path_char(str, k) + 1));
         j = 0;
         while (str[k] != ':' && str[k] != '\0') {
             array[i][j] = str[k];
@@ -63,8 +63,9 @@ char *make_str_path(char **env)
     int j = 0;
 
     for (int i = 0; env[i]; i++) {
-        if (env[i][0] == 'P' && env[i][1] == 'A') {
-            path = malloc(sizeof(char) * my_strlen(env[i]) + 1);
+        if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' &&
+            env[i][3] == 'H') {
+            path = malloc(sizeof(char) * (my_strlen(env[i]) + 1));
             for (; env[i][j]; j++)
                 path[j] = env[i][j];
             path[j] = '\0';
