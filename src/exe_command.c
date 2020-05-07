@@ -9,6 +9,8 @@
 
 stru_t strcat_to_path(stru_t stru)
 {
+    if (stru.path == NULL)
+        return (stru);
     for (int i = 0; stru.path[i]; i++)
         stru.path[i] = my_strcat(my_strcat(stru.path[i], "/"), stru.line[0]);
     return (stru);
@@ -17,6 +19,8 @@ stru_t strcat_to_path(stru_t stru)
 char *get_command_into_path(stru_t stru)
 {
     stru = strcat_to_path(stru);
+    if (stru.path == NULL)
+        return (NULL);
     if (access(stru.line[0], F_OK) == 0)
         return (stru.line[0]);
     for (int i = 0; stru.path[i]; i++)
