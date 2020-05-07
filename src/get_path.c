@@ -81,6 +81,9 @@ stru_t get_path(stru_t stru)
         free_double_array(stru.path);
     }
     stru.str_path = make_str_path(stru.envv);
-    stru.path = make_double_array_path(stru.str_path);
+    if (stru.str_path == NULL)
+        stru.path = NULL;
+    else
+        stru.path = make_double_array_path(stru.str_path);
     return (stru);
 }
