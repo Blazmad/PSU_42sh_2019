@@ -12,11 +12,12 @@ int count_path_lines(char *str)
     int i = 0;
     int count = 0;
 
-    while (str[i]) {
+    while (str[i] != '\0') {
         if (str[i] == ':')
             count++;
         i++;
     }
+    str[i] = '\0';
     return (count + 1);
 }
 
@@ -25,11 +26,12 @@ int count_path_char(char *str, int i)
     int count = 0;
 
     while (str[i]) {
-        if (str[i] == ':' || str[i] == '\0')
+        if (str[i] == ':')
             return (count);
         count++;
         i++;
     }
+    str[i] = '\0';
     return (count);
 }
 

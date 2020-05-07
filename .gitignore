@@ -1,0 +1,5 @@
+42sh
+*.o
+vg*
+.vsc*
+.gitignore
