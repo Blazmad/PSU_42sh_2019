@@ -65,7 +65,8 @@ char *make_str_path(char **env)
     int j = 0;
 
     for (int i = 0; env[i]; i++) {
-        if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T') {
+        if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' &&
+            env[i][3] == 'H') {
             path = malloc(sizeof(char) * my_strlen(env[i]) + 1);
             for (; env[i][j]; j++)
                 path[j] = env[i][j];
@@ -82,6 +83,9 @@ stru_t get_path(stru_t stru)
         free_double_array(stru.path);
     }
     stru.str_path = make_str_path(stru.envv);
-    stru.path = make_double_array_path(stru.str_path);
+    if (stru.str_path == NULL)
+        stru.path = NULL;
+    else
+        stru.path = make_double_array_path(stru.str_path);
     return (stru);
 }

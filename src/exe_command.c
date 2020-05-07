@@ -9,6 +9,8 @@
 
 stru_t strcat_to_path(stru_t stru)
 {
+    if (stru.path == NULL)
+        return (stru);
     for (int i = 0; stru.path[i]; i++)
         stru.path[i] = my_strcat(my_strcat(stru.path[i], "/"),
             stru.line[stru.nb]);
@@ -18,6 +20,8 @@ stru_t strcat_to_path(stru_t stru)
 char *get_command_into_path(stru_t stru)
 {
     stru = strcat_to_path(stru);
+    if (stru.path == NULL)
+        return (NULL);
     if (access(stru.line[stru.nb], F_OK) == 0)
         return (stru.line[stru.nb]);
     for (int i = 0; stru.path[i] != NULL; i++) {
@@ -49,12 +53,12 @@ int execute_command(stru_t stru)
 {
     char *command = get_command_into_path(stru);
     int status = 0;
-    pid_t pid = fork();
+    pid_t pid;
 
     if (check_access_echo(stru, status, command) == 1) {
         redirection(stru);
         return (1);
-    } if (pid == -1) {
+    } if ((pid = fork()) == -1) {
         perror("fork_error\n");
         exit(EXIT_FAILURE);
     } else if (pid == 0) {
