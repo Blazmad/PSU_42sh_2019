@@ -7,9 +7,9 @@
 
 #include "my.h"
 
-void error_input_exit(stru_t stru)
+void error_input_exit(stru_t *stru)
 {
-    if (nb_tab_lines(stru.line) == 1) {
+    if (nb_tab_lines(stru->line) == 1) {
         my_putstr("exit\n");
         free_all(stru);
         exit(0);
@@ -18,50 +18,50 @@ void error_input_exit(stru_t stru)
     mysh(stru);
 }
 
-void error_input_env(stru_t stru)
+void error_input_env(stru_t *stru)
 {
-    if (nb_tab_lines(stru.line) == 1) {
+    if (nb_tab_lines(stru->line) == 1) {
         put_env(stru);
         mysh(stru);
     }
-    if (is_directory(stru.line[1]) == 0)
-        my_printf("env: ‘%s’: Permission denied\n", stru.line[1]);
+    if (is_directory(stru->line[1]) == 0)
+        my_printf("env: ‘%s’: Permission denied\n", stru->line[1]);
     else
-        my_printf("env: ‘%s’: No such file or directory\n", stru.line[1]);
+        my_printf("env: ‘%s’: No such file or directory\n", stru->line[1]);
     mysh(stru);
 }
 
-void error_input_cd(stru_t stru)
+void error_input_cd(stru_t *stru)
 {
-    if (nb_tab_lines(stru.line) > 2) {
+    if (nb_tab_lines(stru->line) > 2) {
         my_putstr("cd: Too many arguments.\n");
         mysh(stru);
     }
-    if (nb_tab_lines(stru.line) == 2) {
-        if (stru.line[1][0] == '~' && stru.line[1][1] != '\0' &&
-            stru.line[1][1] != '/') {
-            my_printf("Unknown user: %c.\n", stru.line[1][1]);
+    if (nb_tab_lines(stru->line) == 2) {
+        if (stru->line[1][0] == '~' && stru->line[1][1] != '\0' &&
+            stru->line[1][1] != '/') {
+            my_printf("Unknown user: %c.\n", stru->line[1][1]);
             mysh(stru);
         }
-        if (is_file(stru.line[1]) == 0) {
-            my_printf("%s: Not a directory.\n", stru.line[1]);
+        if (is_file(stru->line[1]) == 0) {
+            my_printf("%s: Not a directory.\n", stru->line[1]);
             mysh(stru);
         }
-        else if (is_directory(stru.line[1]) != 0 && (stru.line[1][0] != '~' &&
-            stru.line[1][0] != '-')) {
-            my_printf("%s: No such file or directory.\n", stru.line[1]);
+        else if (is_directory(stru->line[1]) != 0 && (stru->line[1][0] != '~' &&
+            stru->line[1][0] != '-')) {
+            my_printf("%s: No such file or directory.\n", stru->line[1]);
             mysh(stru);
         }
     }
 }
 
-void error_input_setenv(stru_t stru)
+void error_input_setenv(stru_t *stru)
 {
-    if (nb_tab_lines(stru.line) == 2 || nb_tab_lines(stru.line) == 3) {
-        if (check_first_is_letter(stru.line[1]) == 1) {
+    if (nb_tab_lines(stru->line) == 2 || nb_tab_lines(stru->line) == 3) {
+        if (check_first_is_letter(stru->line[1]) == 1) {
             my_putstr("setenv: Variable name must begin with a letter.\n");
             mysh(stru);
-        } else if (check_is_alphanumeric(stru.line[1]) == 1) {
+        } else if (check_is_alphanumeric(stru->line[1]) == 1) {
             my_putstr("setenv: Variable name must contain ");
             my_putstr("alphanumeric characters.\n");
             mysh(stru);

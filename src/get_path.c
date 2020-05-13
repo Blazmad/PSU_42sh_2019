@@ -76,16 +76,15 @@ char *make_str_path(char **env)
     return (path);
 }
 
-stru_t get_path(stru_t stru)
+void get_path(stru_t *stru)
 {
-    if (stru.str_path != NULL) {
-        free(stru.str_path);
-        free_double_array(stru.path);
+    if (stru->str_path != NULL) {
+        free(stru->str_path);
+        free_double_array(stru->path);
     }
-    stru.str_path = make_str_path(stru.envv);
-    if (stru.str_path == NULL)
-        stru.path = NULL;
+    stru->str_path = make_str_path(stru->envv);
+    if (stru->str_path == NULL)
+        stru->path = NULL;
     else
-        stru.path = make_double_array_path(stru.str_path);
-    return (stru);
+        stru->path = make_double_array_path(stru->str_path);
 }
