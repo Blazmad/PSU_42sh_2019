@@ -70,8 +70,7 @@ void cd_bultin(stru_t *stru)
         getcwd(stru->pwd, sizeof(stru->pwd));
         update_env_element(stru, search_pwd_element(stru), stru->pwd);
         return;
-    }
-    if (nb_tab_lines(stru->line) == 2 && stru->line[1][0] == '-' &&
+    } if (nb_tab_lines(stru->line) == 2 && stru->line[1][0] == '-' &&
         stru->line[1][1] == '\0') {
         if (stru->old_pwd != NULL) {
             chdir(stru->old_pwd);

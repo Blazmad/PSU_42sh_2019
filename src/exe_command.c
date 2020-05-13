@@ -7,6 +7,14 @@
 
 #include "my.h"
 
+void cat_env(stru_t *stru)
+{
+    for (int j = 0; stru->line[j] != NULL; j++) {
+        my_putstr(stru->line[j]);
+        my_putchar('\n');
+    }
+}
+
 void strcat_to_path(stru_t *stru)
 {
     if (stru->path == NULL)
@@ -46,6 +54,8 @@ void check_execve_error(stru_t *stru, char *command)
     } else if (execve(command, stru->line, stru->envv) == -1)
         my_printf("%s: Command not found.\n", stru->line[stru->nb]);
 }
+
+// execve je dois lui envoyer que le ls et pas le ;
 
 int execute_command(stru_t *stru)
 {
