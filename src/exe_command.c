@@ -7,49 +7,47 @@
 
 #include "my.h"
 
-stru_t strcat_to_path(stru_t stru)
+void strcat_to_path(stru_t *stru)
 {
-    if (stru.path == NULL)
-        return (stru);
-    for (int i = 0; stru.path[i]; i++)
-        stru.path[i] = my_strcat(my_strcat(stru.path[i], "/"),
-            stru.line[stru.nb]);
-    return (stru);
+    if (stru->path == NULL)
+        return;
+    for (int i = 0; stru->path[i]; i++)
+        stru->path[i] = my_strcat(my_strcat(stru->path[i], "/"),
+            stru->line[stru->nb]);
 }
 
-char *get_command_into_path(stru_t stru)
+char *get_command_into_path(stru_t *stru)
 {
-    stru = strcat_to_path(stru);
-    if (stru.path == NULL)
+    strcat_to_path(stru);
+    if (stru->path == NULL)
         return (NULL);
-    if (access(stru.line[stru.nb], F_OK) == 0)
-        return (stru.line[stru.nb]);
-    for (int i = 0; stru.path[i] != NULL; i++) {
-        if (access(stru.path[i], F_OK) == 0)
-            return (stru.path[i]);
+    if (access(stru->line[stru->nb], F_OK) == 0)
+        return (stru->line[stru->nb]);
+    for (int i = 0; stru->path[i] != NULL; i++) {
+        if (access(stru->path[i], F_OK) == 0)
+            return (stru->path[i]);
     }
     return (NULL);
 }
 
-stru_t check_execve_error(stru_t stru, char *command)
+void check_execve_error(stru_t *stru, char *command)
 {
     DIR *dir = NULL;
 
-    if (stru.line[stru.nb][0] == 0 || stru.line[stru.nb] == NULL)
+    if (stru->line[stru->nb][0] == 0 || stru->line[stru->nb] == NULL)
         my_printf("%s: Exec format error, Wrong Architecture.\n",
-            stru.line[stru.nb]);
-    if (stru.line[stru.nb][0] == '/' ||
-        (stru.line[stru.nb][0] == '.' && stru.line[stru.nb][1] == '/')) {
-        if ((dir = opendir(stru.line[stru.nb])) != NULL ||
-            (access(stru.line[stru.nb], R_OK | X_OK) == -1 &&
-            execve(command, stru.line, stru.envv) == -1))
-                my_printf("%s: Permission denied.\n", stru.line[stru.nb]);
-    } else if (execve(command, stru.line, stru.envv) == -1)
-        my_printf("%s: Command not found.\n", stru.line[stru.nb]);
-    return (stru);
+            stru->line[stru->nb]);
+    if (stru->line[stru->nb][0] == '/' ||
+        (stru->line[stru->nb][0] == '.' && stru->line[stru->nb][1] == '/')) {
+        if ((dir = opendir(stru->line[stru->nb])) != NULL ||
+            (access(stru->line[stru->nb], R_OK | X_OK) == -1 &&
+            execve(command, stru->line, stru->envv) == -1))
+                my_printf("%s: Permission denied.\n", stru->line[stru->nb]);
+    } else if (execve(command, stru->line, stru->envv) == -1)
+        my_printf("%s: Command not found.\n", stru->line[stru->nb]);
 }
 
-int execute_command(stru_t stru)
+int execute_command(stru_t *stru)
 {
     char *command = get_command_into_path(stru);
     int status = 0;

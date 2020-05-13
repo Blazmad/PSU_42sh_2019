@@ -64,12 +64,12 @@ int compar(char *get, char *str, int size)
     return (1);
 }
 
-void put_env(stru_t stru)
+void put_env(stru_t *stru)
 {
     int i = 0;
 
-    while (stru.envv[i] != NULL) {
-        my_putstr(stru.envv[i]);
+    while (stru->envv[i] != NULL) {
+        my_putstr(stru->envv[i]);
         my_putchar('\n');
         i++;
     }

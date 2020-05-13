@@ -14,15 +14,15 @@ void free_double_array(char **array)
     free(array);
 }
 
-void free_all(stru_t stru)
+void free_all(stru_t *stru)
 {
-    free_double_array(stru.envv);
-    if (stru.str_line != NULL)  {
-        free(stru.str_line);
-        free_double_array(stru.line);
+    free_double_array(stru->envv);
+    if (stru->str_line != NULL)  {
+        free(stru->str_line);
+        free_double_array(stru->line);
     }
-    if (stru.str_path != NULL) {
-        free(stru.str_path);
-        free_double_array(stru.path);
+    if (stru->str_path != NULL) {
+        free(stru->str_path);
+        free_double_array(stru->path);
     }
 }

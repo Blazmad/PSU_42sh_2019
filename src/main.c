@@ -15,8 +15,8 @@ int main(int ac, char **av, char **env)
         my_putstr("Usage: ./42sh\n");
         return (84);
     }
-    stru = get_env(env, stru);
-    mysh(stru);
-    free_all(stru);
+    get_env(env, &stru);
+    mysh(&stru);
+    free_all(&stru);
     return (0);
 }

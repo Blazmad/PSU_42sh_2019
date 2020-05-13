@@ -56,7 +56,7 @@ char **make_double_array_line(char *str)
     return (array);
 }
 
-char *make_str_line(stru_t stru)
+char *make_str_line(stru_t *stru)
 {
     size_t len;
     char *lineptr = NULL;
@@ -70,9 +70,8 @@ char *make_str_line(stru_t stru)
     return (lineptr);
 }
 
-stru_t get_line(stru_t stru)
+void get_line(stru_t *stru)
 {
-    stru.str_line = make_str_line(stru);
-    stru.line = make_double_array_line(stru.str_line);
-    return (stru);
+    stru->str_line = make_str_line(stru);
+    stru->line = make_double_array_line(stru->str_line);
 }
