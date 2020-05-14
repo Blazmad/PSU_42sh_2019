@@ -40,17 +40,16 @@ char **make_double_array_line(char *str)
     int k = 0;
     char **array = malloc(sizeof(char *) * (count_line_lines(str) + 1));
 
-    while (i < count_line_lines(str)) {
+    for (; i < count_line_lines(str); i++, k++) {
         array[i] = malloc(sizeof(char) * count_line_char(str, k) + 1);
-        j = 0;
-        while (str[k] != ' ' && str[k] != '\0') {
+        for (j = 0; str[k] != ' ' && str[k] != '\0'; j++, k++) {
+            if (str[k] == ';') {
+                array[i] = NULL;
+                return (array);
+            }
             array[i][j] = str[k];
-            j++;
-            k++;
         }
         array[i][j] = '\0';
-        i++;
-        k++;
     }
     array[i] = NULL;
     return (array);
