@@ -19,10 +19,10 @@ void strcat_to_path(stru_t *stru)
 char *get_command_into_path(stru_t *stru)
 {
     strcat_to_path(stru);
-    if (stru->path == NULL)
-        return (NULL);
     if (access(stru->line[stru->nb], F_OK) == 0)
         return (stru->line[stru->nb]);
+    if (stru->path == NULL)
+        return (NULL);
     for (int i = 0; stru->path[i] != NULL; i++) {
         if (access(stru->path[i], F_OK) == 0)
             return (stru->path[i]);
@@ -41,10 +41,15 @@ void check_execve_error(stru_t *stru, char *command)
         (stru->line[stru->nb][0] == '.' && stru->line[stru->nb][1] == '/')) {
         if ((dir = opendir(stru->line[stru->nb])) != NULL ||
             (access(stru->line[stru->nb], R_OK | X_OK) == -1 &&
-            execve(command, stru->line, stru->envv) == -1))
+            execve(command, stru->line, stru->envv) == -1)) {
                 my_printf("%s: Permission denied.\n", stru->line[stru->nb]);
-    } else if (execve(command, stru->line, stru->envv) == -1)
+                return;
+            }
+    } else if (execve(command, stru->line, stru->envv) == -1) {
         my_printf("%s: Command not found.\n", stru->line[stru->nb]);
+        return;
+    }
+    execve(command, stru->line, stru->envv);
 }
 
 int execute_command(stru_t *stru)
