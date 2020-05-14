@@ -38,14 +38,19 @@ int check_and_exec_command(stru_t *stru)
     return (0);
 }
 
+void init_and_exec(stru_t *stru)
+{
+    get_line(stru);
+    get_path(stru);
+    check_and_exec_command(stru);
+}
+
 int mysh(stru_t *stru)
 {
     while (1) {
         my_signal();
         my_printf("\033[33m42sh$>\033[36m[%s] \033[33m~ \033[0m", stru->pwd);
-        get_line(stru);
-        get_path(stru);
-        check_and_exec_command(stru);
+        init_and_exec(stru);
     }
     return (0);
 }
