@@ -15,20 +15,19 @@ void error_input_exit(stru_t *stru)
         exit(0);
     }
     my_putstr("exit: Expression Syntax.\n");
-    mysh(stru);
 }
 
-void error_input_env(stru_t *stru)
+int error_input_env(stru_t *stru)
 {
     if (nb_tab_lines(stru->line) == 1) {
         put_env(stru);
-        mysh(stru);
+        return (0);
     }
     if (is_directory(stru->line[1]) == 0)
         my_printf("env: ‘%s’: Permission denied\n", stru->line[1]);
     else
         my_printf("env: ‘%s’: No such file or directory\n", stru->line[1]);
-    mysh(stru);
+    return (0);
 }
 
 void error_input_cd(stru_t *stru)
