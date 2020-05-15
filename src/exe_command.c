@@ -21,7 +21,7 @@ void strcat_to_path(stru_t *stru)
         return;
     for (int i = 0; stru->path[i]; i++)
         stru->path[i] = my_strcat(my_strcat(stru->path[i], "/"),
-            stru->line[stru->nb]);
+            stru->line[0]);
 }
 
 char *get_command_into_path(stru_t *stru)
@@ -29,8 +29,8 @@ char *get_command_into_path(stru_t *stru)
     strcat_to_path(stru);
     if (stru->path == NULL)
         return (NULL);
-    if (access(stru->line[stru->nb], F_OK) == 0)
-        return (stru->line[stru->nb]);
+    if (access(stru->line[0], F_OK) == 0)
+        return (stru->line[0]);
     for (int i = 0; stru->path[i] != NULL; i++) {
         if (access(stru->path[i], F_OK) == 0)
             return (stru->path[i]);
@@ -42,20 +42,18 @@ void check_execve_error(stru_t *stru, char *command)
 {
     DIR *dir = NULL;
 
-    if (stru->line[stru->nb][0] == 0 || stru->line[stru->nb] == NULL)
+    if (stru->line[0][0] == 0 || stru->line[0] == NULL)
         my_printf("%s: Exec format error, Wrong Architecture.\n",
-            stru->line[stru->nb]);
-    if (stru->line[stru->nb][0] == '/' ||
-        (stru->line[stru->nb][0] == '.' && stru->line[stru->nb][1] == '/')) {
-        if ((dir = opendir(stru->line[stru->nb])) != NULL ||
-            (access(stru->line[stru->nb], R_OK | X_OK) == -1 &&
+            stru->line[0]);
+    if (stru->line[0][0] == '/' ||
+        (stru->line[0][0] == '.' && stru->line[0][1] == '/')) {
+        if ((dir = opendir(stru->line[0])) != NULL ||
+            (access(stru->line[0], R_OK | X_OK) == -1 &&
             execve(command, stru->line, stru->envv) == -1))
-                my_printf("%s: Permission denied.\n", stru->line[stru->nb]);
+                my_printf("%s: Permission denied.\n", stru->line[0]);
     } else if (execve(command, stru->line, stru->envv) == -1)
-        my_printf("%s: Command not found.\n", stru->line[stru->nb]);
+        my_printf("%s: Command not found.\n", stru->line[0]);
 }
-
-// execve je dois lui envoyer que le ls et pas le ;
 
 int execute_command(stru_t *stru)
 {

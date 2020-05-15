@@ -65,21 +65,20 @@ void change_env_element(stru_t *stru, int line)
     stru->envv[line][x] = '\0';
 }
 
-void setenv_bultin(stru_t *stru)
+int setenv_bultin(stru_t *stru)
 {
     int line = 0;
 
     error_input_setenv(stru);
     if (nb_tab_lines(stru->line) == 1) {
         put_env(stru);
-        mysh(stru);
-    }
-    if (nb_tab_lines(stru->line) > 3) {
+        return (0);
+    } if (nb_tab_lines(stru->line) > 3) {
         my_putstr("setenv: Too many arguments.\n");
-        mysh(stru);
-    }
-    if ((line = search_env_element(stru, stru->line[1])) != -1)
+        return (0);
+    } if ((line = search_env_element(stru, stru->line[1])) != -1)
         change_env_element(stru, line);
     else if (search_env_element(stru, stru->line[1]) == -1)
         stru->envv = add_env_element(stru);
+    return (0);
 }
