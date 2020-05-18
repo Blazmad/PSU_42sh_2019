@@ -31,16 +31,17 @@ char **remove_env_element(stru_t *stru, int line)
     return (array);
 }
 
-void unsetenv_bultin(stru_t *stru)
+int unsetenv_bultin(stru_t *stru)
 {
     int line = 0;
 
     if (nb_tab_lines(stru->line) == 1) {
         my_putstr("unsetenv: Too few arguments.\n");
-        mysh(stru);
+        return (0);
     }
     for (int i = 1; stru->line[i]; i++) {
         line = search_env_element(stru, stru->line[i]);
         stru->envv = remove_env_element(stru, line);
     }
+    return (0);
 }
