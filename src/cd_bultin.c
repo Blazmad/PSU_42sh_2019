@@ -61,7 +61,7 @@ void cd_bultin_two(stru_t *stru)
     }
 }
 
-void cd_bultin(stru_t *stru)
+int cd_bultin(stru_t *stru)
 {
     error_input_cd(stru);
     if (check_arg_cd(stru) == 0) {
@@ -69,9 +69,8 @@ void cd_bultin(stru_t *stru)
         chdir(make_str_home(stru->envv));
         getcwd(stru->pwd, sizeof(stru->pwd));
         update_env_element(stru, search_pwd_element(stru), stru->pwd);
-        return;
-    }
-    if (nb_tab_lines(stru->line) == 2 && stru->line[1][0] == '-' &&
+        return (0);
+    } if (nb_tab_lines(stru->line) == 2 && stru->line[1][0] == '-' &&
         stru->line[1][1] == '\0') {
         if (stru->old_pwd != NULL) {
             chdir(stru->old_pwd);
@@ -79,7 +78,8 @@ void cd_bultin(stru_t *stru)
             getcwd(stru->pwd, sizeof(stru->pwd));
             update_env_element(stru, search_pwd_element(stru), stru->pwd);
         }
-        return;
+        return (0);
     }
     cd_bultin_two(stru);
+    return (0);
 }

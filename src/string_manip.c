@@ -18,15 +18,13 @@ char *move_spaces(char *lineptr)
             cpy[k++] = lineptr[x];
             a = 1;
         }
-        if (lineptr[x] == ' ' &&
-            (lineptr[x + 1] != ' ' && lineptr[x + 1] != '\t') && a == 1)
+        if (lineptr[x] == ' ' && (lineptr[x + 1] != ' ' &&
+            lineptr[x + 1] != '\t' && lineptr[x + 1] != '\0') && a == 1)
             cpy[k++] = lineptr[x];
-        else if (lineptr[x] == '\t' &&
-            (lineptr[x + 1] != ' ' && lineptr[x + 1] != '\t') && a == 1)
+        else if (lineptr[x] == '\t' && (lineptr[x + 1] != ' ' &&
+            lineptr[x + 1] != '\t' && lineptr[x + 1] != '\0') && a == 1)
             cpy[k++] = ' ';
     }
-    if (cpy[k - 2] == ' ')
-        cpy[k - 1] = '\0';
     cpy[k] = '\0';
     return (cpy);
 }

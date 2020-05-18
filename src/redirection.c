@@ -39,7 +39,7 @@ int check_access_echo(stru_t *stru, int res, char *command)
 {
     if (command == NULL)
         return (1);
-    if (my_strcmp(stru->line[stru->nb], "echo") == 0) {
+    if (my_strcmp(stru->line[0], "echo") == 0) {
         redirection_echo(stru);
         error_segfault(res);
         mysh(stru);

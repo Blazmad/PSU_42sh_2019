@@ -13,6 +13,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <signal.h>
+#include <stdarg.h>
 
 #define quit __asm__("movq $60, %rax\nmovq $0, %rdi\nsyscall")
 typedef struct stru
@@ -25,15 +26,16 @@ typedef struct stru
     char pwd[100];
     char *old_pwd;
     int nb;
+    char **tmp;
 }stru_t;
 
 //-cd_bultin.c
-void cd_bultin(stru_t *stru);
+int cd_bultin(stru_t *stru);
 
 //-error_input.c
 void error_input_cd(stru_t *stru);
 void error_input_exit(stru_t *stru);
-void error_input_env(stru_t *stru);
+int error_input_env(stru_t *stru);
 void error_input_setenv(stru_t *stru);
 
 //-exe_command.c
@@ -55,6 +57,7 @@ void get_path(stru_t *stru);
 //-mysh.c
 stru_t init_stru(stru_t stru);
 int mysh(stru_t *stru);
+void init_and_exec(stru_t *stru);
 int check_and_exec_command(stru_t *stru);
 
 //-redirection.c
@@ -68,7 +71,7 @@ int search_env_element(stru_t *stru, char *element);
 int search_pwd_element(stru_t *stru);
 
 //-setenv_bultin.c
-void setenv_bultin(stru_t *stru);
+int setenv_bultin(stru_t *stru);
 
 //-signal.c
 void error_segfault(int status);
@@ -79,9 +82,15 @@ char *clean_str(char *lineptr);
 int compar(char *get, char *str, int size);
 int nb_tab_lines(char **tab);
 void put_env(stru_t *stru);
+char *move_spaces(char *lineptr);
+
+//-to_array_command.c
+char **make_double_array_tmp(char *str);
+void clean_to_array(stru_t *stru);
+int count_line(char *str);
 
 //-unsetenv_bultin.c
-void unsetenv_bultin(stru_t *stru);
+int unsetenv_bultin(stru_t *stru);
 
 //-utils.c
 int check_first_is_letter(char *str);

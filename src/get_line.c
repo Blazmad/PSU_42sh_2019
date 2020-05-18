@@ -40,17 +40,12 @@ char **make_double_array_line(char *str)
     int k = 0;
     char **array = malloc(sizeof(char *) * (count_line_lines(str) + 1));
 
-    while (i < count_line_lines(str)) {
+    for (; i < count_line_lines(str); i++, k++) {
         array[i] = malloc(sizeof(char) * count_line_char(str, k) + 1);
-        j = 0;
-        while (str[k] != ' ' && str[k] != '\0') {
+        for (j = 0; str[k] != ' ' && str[k] != '\0'; j++, k++) {
             array[i][j] = str[k];
-            j++;
-            k++;
         }
         array[i][j] = '\0';
-        i++;
-        k++;
     }
     array[i] = NULL;
     return (array);
@@ -72,6 +67,13 @@ char *make_str_line(stru_t *stru)
 
 void get_line(stru_t *stru)
 {
-    stru->str_line = make_str_line(stru);
-    stru->line = make_double_array_line(stru->str_line);
+    if (stru->nb == 0) {
+        stru->str_line = make_str_line(stru);
+        stru->tmp = make_double_array_tmp(stru->str_line);
+        clean_to_array(stru);
+    } if (stru->tmp[stru->nb] == NULL) {
+        stru->nb = 0;
+        mysh(stru);
+    }
+    stru->line = make_double_array_line(stru->tmp[stru->nb]);
 }
