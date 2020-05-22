@@ -4,13 +4,10 @@
 ** File description:
 ** displays the content of an array of words
 */
-#include <stdlib.h>
 
-int my_putchar(char c);
+#include "my.h"
 
-int my_putstr(char const *str);
-
-int my_show_word_array(char **src)
+int my_show_word_array(char *const *src)
 {
     int i = 0;
 

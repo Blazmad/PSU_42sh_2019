@@ -4,7 +4,8 @@
 ** File description:
 ** display a char
 */
-#include <unistd.h>
+
+#include "my.h"
 
 void my_putchar(char c)
 {

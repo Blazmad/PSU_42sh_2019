@@ -5,7 +5,7 @@
 ** concatenates n characters of the src string to the end of the dest string
 */
 
-int my_strlen(char const *str);
+#include "my.h"
 
 char *my_strncat(char *dest, char const *src, int nb)
 {

@@ -6,68 +6,50 @@
 ##
 
 NAME		=	42sh
+TEST		=	unit_tests
 
-LD		=	@ld
-CC		=	@gcc
-DIROBJ		=	objects
-EXTENSION	=	.c
+CC			=	@gcc -Iinclude
 
-SRC			=	$(wildcard $(addprefix lib/my/, *)$(EXTENSION))
-SRC			+=	$(wildcard $(addprefix src/, *)$(EXTENSION))
-NOM			=	$(basename $(notdir $(SRC)))
+SRC			=	$(wildcard $(addprefix lib/my/, *).c)
+SRC			+=	$(wildcard $(addprefix src/, *).c)
 OBJ			=	$(SRC:.c=.o)
-SRC-CRIT	=	$(wildcard $(addprefix tests/, *)$(EXTENSION))
-OBJ-CRIT	=	$(SRC-CRIT:$(EXTENSION)=.o)
 
+SRC-CRIT	=	$(wildcard $(addprefix lib/my/, *).c)
+SRC-CRIT	+=	$(filter-out src/main.c,$(wildcard $(addprefix src/, *).c))
+SRC-CRIT	+=	$(wildcard $(addprefix tests/, *).c)
+OBJ-CRIT	=	$(SRC-CRIT:.c=.o)
+
+CFLAGS		+=	-W -Wall -Wextra -fno-builtin -g
 NCURSFLAGS	+=	-lncurses
-LDFLAGS		+=	-g3
-CFLAGS		+=	-Iinclude -W -Wall -Wextra -fno-builtin -g
-CRITFLAGS	=	-lcriterion --coverage
-CGRAPHICS	=	-lcsfml-window -lcsfml-system -lcsfml-audio -lcsfml-graphics
+CRITFLAGS	=	--coverage -lcriterion
 
 END		=	\033[0m
-BOLD		=	\033[1m
-GREY		=	\033[30m
+BOLD	=	\033[1m
 RED		=	\033[31m
-GREEN		=	\033[32m
-YELLOW		=	\033[33m
-BLUE		=	\033[34m
-PURPLE		=	\033[35m
-CYAN		=	\033[36m
-WHITE		=	\033[37m
+GREEN	=	\033[32m
 
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	@$(CC) $(LDFLAGS) $(CFLAGS) -o $(NAME) $(OBJ)
-	@echo -e "$(GREEN)=========($(BOLD) COMPLETED $(END)$(GREEN))=========$(END)"
+	@$(CC) -o $(NAME) $(OBJ) $(CFLAGS)
+	@echo -e "$(GREEN)$(BOLD)[ COMPLETED ]$(END)"
 
 test_run:	$(OBJ-CRIT)
-	@$(CC) $(CFLAGS) $(CRITFLAGS) $(OBJ-CRIT)
-	@echo -e "$(GREEN)=========($(BOLD) COMPLETED $(END)$(GREEN))=========$(END)"
-	./a.out
+	@$(CC) -o $(TEST) $(OBJ-CRIT) $(CRITFLAGS)
+	@$(RM) *.gc*
+	@echo -e "$(GREEN)$(BOLD)[ UNIT_TESTS ]$(END)"
+	@./$(TEST)
 
 clean:
 	@find . -type f \( -iname "*~" \) -delete
 	@$(RM) $(OBJ)
 	@$(RM) $(OBJ-CRIT)
-	@echo -e "$(RED)==========($(BOLD) CLEANED $(END)$(RED))==========$(END)"
+	@echo -e "$(RED)$(BOLD)[ CLEANED ]$(END)"
 
 fclean:	clean
-	@$(RM) -r $(DIROBJ)
 	@$(RM) $(NAME)
-	@$(RM) a.out
+	@$(RM) $(TEST)
 
 re:	fclean all
-
-$(DIROBJ):
-	@mkdir -p $@ \
-	&& echo -e "$(GREEN)[OK]\t$(CYAN)Creating:$(WHITE)$(BOLD)" $(DIROBJ) "$(END)" \
-	|| echo -e "$(RED)[KO]\tCan't create:$(BOLD)" $(DIROBJ) "$(END)"
-
-$(DIROBJ)/%.o:	src/%$(EXTENSION) | $(DIROBJ)
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $< \
-	&& echo -e "$(GREEN)[OK]\t$(CYAN)Compiling:$(WHITE)$(BOLD)" $< "$(END)" \
-	|| echo -e "$(RED)[KO]\tCan't compile:$(BOLD)" $< "$(END)"
 
 .PHONY: all test_run clean fclean re
