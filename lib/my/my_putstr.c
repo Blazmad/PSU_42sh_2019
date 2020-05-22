@@ -5,7 +5,7 @@
 ** displays, one-by-one, the characters of a string
 */
 
-void my_putchar(char c);
+#include "my.h"
 
 int my_putstr(char const *str)
 {

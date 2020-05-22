@@ -5,7 +5,7 @@
 ** displays the number given as a parameter
 */
 
-char my_putchar(char c);
+#include "my.h"
 
 int my_put_nbr(int nbr)
 {
