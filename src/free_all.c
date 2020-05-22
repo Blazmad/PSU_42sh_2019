@@ -17,6 +17,7 @@ void free_double_array(char **array)
 void free_all(stru_t *stru)
 {
     free_double_array(stru->envv);
+    stru->str_line = NULL;
     if (stru->str_line != NULL)  {
         free(stru->str_line);
         free_double_array(stru->line);
