@@ -7,7 +7,7 @@
 
 #include "my.h"
 
-void redirection_echo(stru_t *stru)
+int redirection_echo(stru_t *stru)
 {
     int fd = 0;
     char *str = NULL;
@@ -20,8 +20,10 @@ void redirection_echo(stru_t *stru)
             S_IRWXU);
             write(fd, str, my_strlen(str));
             write(fd, "\n", 2);
+            return (1);
         }
     }
+    return (0);
 }
 
 void redirection(stru_t *stru)
@@ -40,9 +42,10 @@ int check_access_echo(stru_t *stru, int res, char *command)
     if (command == NULL)
         return (1);
     if (my_strcmp(stru->line[0], "echo") == 0) {
-        redirection_echo(stru);
-        error_segfault(res);
-        mysh(stru);
+        if (redirection_echo(stru) == 1) {
+            error_segfault(res);
+            return (2);
+        }
     }
     return (0);
 }
