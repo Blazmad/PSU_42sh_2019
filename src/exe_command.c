@@ -69,7 +69,9 @@ int execute_command(stru_t *stru)
     if (check_access_echo(stru, status, command) == 1) {
         redirection(stru);
         return (1);
-    } if ((pid = fork()) == -1) {
+    } if (check_access_echo(stru, status, command) == 2)
+        return (0);
+    if ((pid = fork()) == -1) {
         perror("fork_error\n");
         exit(EXIT_FAILURE);
     } else if (pid == 0) {
