@@ -23,6 +23,8 @@ CFLAGS		+=	-W -Wall -Wextra -fno-builtin -g
 NCURSFLAGS	+=	-lncurses
 CRITFLAGS	=	--coverage -lcriterion
 
+COVERAGE	=	gcovr --exclude tests/
+
 END		=	\033[0m
 BOLD	=	\033[1m
 RED		=	\033[31m
@@ -34,11 +36,12 @@ $(NAME):	$(OBJ)
 	@$(CC) -o $(NAME) $(OBJ) $(CFLAGS)
 	@echo -e "$(GREEN)$(BOLD)[ COMPLETED ]$(END)"
 
-test_run:	$(OBJ-CRIT)
-	@$(CC) -o $(TEST) $(OBJ-CRIT) $(CRITFLAGS)
-	@$(RM) *.gc*
+test_run:	$(SRC-CRIT)
+	@$(CC) -o $(TEST) $(SRC-CRIT) $(CRITFLAGS)
 	@echo -e "$(GREEN)$(BOLD)[ UNIT_TESTS ]$(END)"
 	@./$(TEST)
+	@$(COVERAGE)
+	@rm *.gc*
 
 clean:
 	@find . -type f \( -iname "*~" \) -delete
