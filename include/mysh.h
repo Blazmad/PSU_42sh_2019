@@ -71,6 +71,7 @@ int search_env_element(stru_t *stru, char *element);
 int search_pwd_element(stru_t *stru);
 
 //-setenv_bultin.c
+char **add_env_element(char **line, stru_t *stru);
 int setenv_bultin(stru_t *stru);
 
 //-signal.c
