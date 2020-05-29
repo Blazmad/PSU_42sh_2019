@@ -5,8 +5,6 @@
 ** counts and returns the number of characters found in the string
 */
 
-#include "my.h"
-
 int my_strlen(char const *str)
 {
     int i = 0;

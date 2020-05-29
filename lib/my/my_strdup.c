@@ -4,6 +4,7 @@
 ** File description:
 ** allocates memory and copies the string given as argument in it
 */
+
 #include "my.h"
 
 char *my_strdup(char *src)
