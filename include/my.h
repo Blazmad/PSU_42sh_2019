@@ -9,6 +9,7 @@
 #define MY_H_
 
 #include "mysh.h"
+#include <criterion/criterion.h>
 #include <stdarg.h>
 #include <stdio.h>
 
