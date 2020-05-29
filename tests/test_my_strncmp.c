@@ -14,6 +14,6 @@ Test(my_strncmp, compare_to_string_n_character)
     char *s3 = "zebA";
 
     cr_assert_eq(my_strncmp(s1, s2, 3), 0);
-    cr_assert_eq(my_strncmp(s1, s3,1), -1);
+    cr_assert_eq(my_strncmp(s1, s3, 1), -1);
     cr_assert_eq(my_strncmp(s3, s1, 2), 1);
 }
