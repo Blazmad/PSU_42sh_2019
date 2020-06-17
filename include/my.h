@@ -53,6 +53,5 @@ int my_get_nbr_base(int nb, char *base);
 int my_get_nbr_base_printable(char const *str);
 int my_get_nbr_base_pointer(int nb, char *base);
 int my_printf(char *str, ...);
-int my_strlen_separator(char const *str);
 
 #endif
