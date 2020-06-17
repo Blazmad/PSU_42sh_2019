@@ -60,6 +60,9 @@ int mysh(stru_t *stru);
 void init_and_exec(stru_t *stru);
 int check_and_exec_command(stru_t *stru);
 
+//-my_strlen_separator.c
+int my_strlen_separator(char const *str);
+
 //-redirection.c
 int check_access_echo(stru_t *stru, int res, char *command);
 void redirection(stru_t *stru);

@@ -15,7 +15,7 @@ SRC			+=	$(wildcard $(addprefix src/, *).c)
 OBJ			=	$(SRC:.c=.o)
 
 SRC-CRIT	=	$(wildcard $(addprefix lib/my/, *).c)
-SRC-CRIT	+=	$(filter-out src/main.c,$(wildcard $(addprefix src/, *).c))
+# SRC-CRIT	+=	$(filter-out src/main.c,$(wildcard $(addprefix src/, *).c))
 SRC-CRIT	+=	$(wildcard $(addprefix tests/, *).c)
 OBJ-CRIT	=	$(SRC-CRIT:.c=.o)
 
