@@ -13,4 +13,4 @@ Some functionality:<br />
 
 USAGE:<br />
   make<br />
-  ./mysh
+  ./42sh
